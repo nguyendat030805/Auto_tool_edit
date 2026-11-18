@@ -16,6 +16,7 @@ Cấu trúc code
 - `web/ui/`: HTML, CSS và JavaScript của trình duyệt (được tách riêng).
 - `services/video/`: xử lý media, giọng đọc, audio, render video và CLI.
 - `services/post/`: dựng ảnh bài viết và xử lý template tải lên.
+- `services/update/`: kiểm tra phiên bản mới trên GitHub Releases.
 - `app.py`, `make_video.py`, `post_template.py`: entry point tương thích với cách chạy cũ.
 
 Các hàm Python trong service có docstring mô tả nhiệm vụ; JavaScript giao diện có chú thích cho các hàm chính.
@@ -25,6 +26,18 @@ Windows: bấm đúp run_app.bat
 macOS/Linux: chạy ./run_app.command (lần đầu cần chmod +x run_app.command)
 
 Lần đầu file sẽ tự tạo môi trường và cài thư viện. Sau đó trình duyệt tự mở trang tool (mặc định http://127.0.0.1:8765). Kéo video nền và ảnh comment vào, gõ lời đọc (hoặc kéo file audio có sẵn), bấm Tạo video, xem và tải video ngay trên trang. Giữ cửa sổ lệnh mở trong lúc dùng; đóng nó là tắt tool.
+
+Cập nhật phiên bản
+
+Khi mở tool, ứng dụng kiểm tra phiên bản mới nhất trong GitHub Releases của `nguyendat030805/Auto_tool_edit`. Nếu có bản mới, giao diện sẽ hiện thông báo và nút tải trực tiếp (hoặc mở trang release nếu chưa có file đính kèm). Công cụ không tự ghi đè file đang chạy; sau khi tải `app.exe`, hãy đóng tool rồi thay file cũ.
+
+Để phát hành bản mới:
+
+1. Tăng `APP_VERSION` trong `services/update/checker.py` (dùng dạng `1.1.0`).
+2. Chạy `BUILD.bat` để tạo `dist\app.exe`.
+3. Tạo GitHub Release với tag tương ứng, ví dụ `v1.1.0`, và đính kèm file có tên chính xác `app.exe`.
+
+Máy người dùng cần kết nối Internet để kiểm tra GitHub. Nếu chưa có release công khai, tool sẽ báo chưa kiểm tra được bản phát hành.
 
 Tạo bài viết từ template (tab "Tạo bài viết từ template")
 

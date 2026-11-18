@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tạo video đọc comment</title>
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="hero-orb hero-orb-one"></div>
+    <div class="hero-orb hero-orb-two"></div>
+    <div class="eyebrow"><span class="eyebrow-dot"></span> CREATOR STUDIO <span class="eyebrow-separator">/</span> CÔNG CỤ SÁNG TẠO <span id="appVersion" class="version-badge">Đang kiểm tra phiên bản...</span></div>
+    <h1>Tạo nội dung <span>ấn tượng</span></h1>
+    <p class="sub">Biến video, ảnh và bình luận thành nội dung cuốn hút chỉ trong vài bước.</p>
+    <div class="hero-pills">
+      <span>✦ Dễ sử dụng</span>
+      <span>⚡ Xử lý ngay trên máy</span>
+      <span>◈ Tuỳ chỉnh linh hoạt</span>
+    </div>
+    <div id="updateNotice" class="update-notice" role="status" aria-live="polite" hidden>
+      <span class="update-icon" aria-hidden="true">↑</span>
+      <div class="update-copy">
+        <strong id="updateTitle"></strong>
+        <span id="updateMessage"></span>
+      </div>
+      <a id="updateLink" class="update-link" target="_blank" rel="noopener noreferrer">Tải bản mới</a>
+    </div>
+    <div id="updateStatus" class="update-status" role="status" aria-live="polite" hidden>
+      <span id="updateStatusText"></span>
+      <button id="checkUpdate" class="mini" type="button">Thử lại</button>
+    </div>
+  </header>
+
+  <div class="tabs-shell">
+    <div class="tabs">
+      <button class="tab on" data-tab="video" type="button"><span class="tab-icon">▶</span> Tạo video</button>
+      <button class="tab" data-tab="post" type="button"><span class="tab-icon">▧</span> Tạo bài viết</button>
+    </div>
+  </div>
+
+  <div id="viewPost" hidden>
+    <section id="postTemplateSection">
+      <h2>Template bài viết</h2>
+      <div class="drop" id="dropPostTemplate"><strong>Tải template PNG từ thiết bị</strong> hoặc bấm để chọn file (mọi kích thước; hệ thống tự điều chỉnh khung chuẩn)</div>
+      <input type="file" id="inPostTemplate" accept="image/png" hidden>
+      <div class="template-preview" id="postTemplatePreview" hidden>
+        <img id="postTemplateImg" alt="Template đang dùng">
+        <div>
+          <div id="postTemplateName" style="font-weight:600"></div>
+          <button class="mini" id="postTemplateRemove" type="button" style="margin-top:6px">Dùng template mặc định</button>
+        </div>
+      </div>
+    </section>
+    <section id="postMainSection">
+      <h2>Nội dung bài viết chính</h2>
+      <div class="field-actions">
+        <button class="mini" type="button" id="pMainPaste">📋 Dán văn bản</button>
+        <button class="mini" type="button" id="pMainLoad">📄 Tải file văn bản</button>
+        <button class="mini" type="button" id="pMainPasteImage">🖼️ Dán ảnh</button>
+        <button class="mini" type="button" id="pMainLoadImage">📷 Tải ảnh</button>
+      </div>
+      <input type="file" id="pMainFile" accept=".txt,.md,.csv,text/plain,text/markdown,text/csv" hidden>
+      <input type="file" id="pMainImageFile" accept="image/*" hidden>
+      <div id="pMainImagePreview" hidden style="margin:8px 0">
+        <img id="pMainImageThumb" alt="Ảnh bài viết chính" style="max-width:220px;max-height:180px;border-radius:8px;border:1px solid var(--line)">
+        <button class="mini" type="button" id="pMainImageRemove" style="margin-left:8px">Xoá ảnh</button>
+      </div>
+      <textarea id="pMain" style="min-height:130px" placeholder="Dán/copy nội dung hoặc tải file văn bản; không bắt buộc gõ tay..."></textarea>
+    </section>
+    <section id="postCommentSection">
+      <h2>Comment <span style="color:var(--muted);font-weight:400">(từ 0 đến 3, thêm hoặc xoá tuỳ ý, ô tự co giãn theo số lượng)</span></h2>
+      <div id="pcList"></div>
+      <button class="mini" id="pcAdd" type="button" style="margin-top:8px">+ Thêm comment</button>
+    </section>
+    <section>
+      <h2>Tuỳ chọn</h2>
+      <div class="opts">
+        <div class="opt"><label>Căn chữ</label>
+          <select id="pAlign"><option value="center">Giữa</option><option value="left">Trái</option></select></div>
+      </div>
+      <p style="color:var(--muted);font-size:13px;margin:10px 0 0">Emoji sẽ bị bỏ qua vì font không vẽ được. Chữ tự xuống dòng và tự chỉnh cỡ cho vừa ô; chữ quá dài thì ảnh được kéo cao thêm.</p>
+    </section>
+    <section>
+      <h2>Xem trước <span style="color:var(--muted);font-weight:400">(tự cập nhật khi bạn gõ)</span></h2>
+      <p class="msg" id="pStatus">Nhập nội dung bài viết chính để xem trước.</p>
+      <div id="pOut" hidden style="text-align:center">
+        <img id="pPrev" alt="Ảnh bài viết" style="max-width:100%;width:460px;border-radius:12px;background:#000">
+        <div class="actions">
+          <a class="btn-link" id="pDl" download="bai-viet.png">Tải ảnh về</a>
+          <button class="btn-link alt" id="pToVideo" type="button">Đưa vào tool làm video (làm bài viết chính)</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="viewVideo">
+  <section>
+    <h2>1. Video nền</h2>
+    <div class="drop" id="dropBg"><strong>Kéo video vào đây</strong> hoặc bấm để chọn file (mp4, mov, webm...)</div>
+    <input type="file" id="inBg" accept="video/*" hidden>
+    <div class="file-line" id="bgInfo" hidden><video id="bgPrev" muted></video><div id="bgName"></div></div>
+  </section>
+
+  <section id="secPost">
+    <h2>2. Bài viết chính <span style="color:var(--muted);font-weight:400">(tuỳ chọn: hiện đầu tiên, to hơn, đọc xong thì biến mất)</span></h2>
+    <div class="drop" id="dropPost"><strong>Kéo ảnh bài viết chính vào đây</strong>, bấm để chọn file, hoặc <strong>Ctrl+V</strong> để dán ảnh vừa chụp
+      <div><button class="mini" id="pastePostBtn" type="button" onclick="event.stopPropagation()" style="margin-top:8px">📋 Dán ảnh từ clipboard</button></div>
+    </div>
+    <input type="file" id="inPost" accept="image/*" hidden>
+    <div id="postBox" hidden>
+      <div class="item" style="grid-template-columns:120px 1fr auto">
+        <img id="postImg" alt="">
+        <div class="body">
+          <textarea id="postText" placeholder="Gõ lời đọc cho bài viết chính..."></textarea>
+          <div class="audio-tag" id="postAudioTag" hidden></div>
+          <div class="drop" id="dropPostAudio" hidden style="padding:12px"><strong>Kéo file audio đọc bài viết vào đây</strong></div>
+          <input type="file" id="inPostAudio" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac" hidden>
+        </div>
+        <div class="btns"><button class="mini" id="postRemove" title="Bỏ bài viết chính">✕</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="secImg">
+    <h2>3. Ảnh comment <span style="color:var(--muted);font-weight:400">(3-4 ảnh, theo thứ tự xuất hiện)</span></h2>
+    <div class="drop" id="dropImg"><strong>Kéo ảnh comment vào đây</strong>, bấm để chọn nhiều ảnh, hoặc <strong>Ctrl+V</strong> để dán ảnh vừa chụp (dán nhiều lần để thêm nhiều ảnh)
+      <div><button class="mini" id="pasteImgBtn" type="button" onclick="event.stopPropagation()" style="margin-top:8px">📋 Dán ảnh từ clipboard</button></div>
+    </div>
+    <input type="file" id="inImg" accept="image/*" multiple hidden>
+    <div id="items"></div>
+  </section>
+
+  <section>
+    <h2>4. Giọng đọc</h2>
+    <div class="modes">
+      <label><input type="radio" name="mode" value="tts" checked> Giọng AI tự động (gõ lời đọc cho từng comment)</label>
+      <label><input type="radio" name="mode" value="audio"> Dùng file audio tôi đã tạo bằng phần mềm khác</label>
+    </div>
+    <div id="audioBox" hidden>
+      <div class="drop" id="dropAudio"><strong>Kéo các file audio vào đây</strong> (tự gán theo thứ tự tên file: a1, a2, a3...)</div>
+      <input type="file" id="inAudio" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac" multiple hidden>
+    </div>
+    <div class="opts" id="ttsOpts" style="margin-top:12px">
+      <div class="opt"><label>Giọng</label>
+        <select id="voice">
+          <option value="vi-VN-HoaiMyNeural">Hoài My (nữ, tiếng Việt)</option>
+          <option value="vi-VN-NamMinhNeural">Nam Minh (nam, tiếng Việt)</option>
+        </select></div>
+      <div class="opt"><label>Công cụ giọng đọc</label>
+        <select id="engine">
+          <option value="auto">Tự động (Edge, lỗi thì dùng Google)</option>
+          <option value="edge">Chỉ Edge (Hoài My / Nam Minh)</option>
+          <option value="gtts">Chỉ Google (gTTS)</option>
+        </select></div>
+      <div class="opt"><label>Tốc độ đọc: <b id="rateVal">+0%</b></label>
+        <input type="range" id="rate" min="-30" max="50" step="5" value="0"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Tuỳ chỉnh video</h2>
+    <div class="opts">
+      <div class="opt"><label>Khung hình</label>
+        <select id="size">
+          <option value="portrait">Dọc 1080x1920 (TikTok, Reels)</option>
+          <option value="landscape">Ngang 1920x1080</option>
+          <option value="square">Vuông 1080x1080</option>
+        </select></div>
+      <div class="opt"><label>Làm tối video nền: <b id="dimVal">25%</b></label>
+        <input type="range" id="dim" min="0" max="60" step="5" value="25"></div>
+      <div class="opt"><label>Vị trí ảnh comment: <b id="offVal">giữa</b></label>
+        <input type="range" id="off" min="-600" max="600" step="25" value="0"></div>
+      <div class="opt"><label>Tiếng hiệu ứng khi comment hiện ra</label>
+        <select id="sfx">
+          <option value="ding">Ting (tiếng chuông ngắn)</option>
+          <option value="pop">Pop (tiếng bộp)</option>
+          <option value="whoosh">Whoosh (tiếng vút)</option>
+          <option value="custom">Dùng file âm thanh của tôi</option>
+          <option value="none">Không dùng</option>
+        </select></div>
+      <div class="opt" id="sfxVolBox"><label>Âm lượng tiếng hiệu ứng: <b id="sfxVolVal">80%</b></label>
+        <input type="range" id="sfxVol" min="10" max="200" step="10" value="80"></div>
+    </div>
+    <div id="sfxBox" hidden style="margin-top:12px">
+      <div class="drop" id="dropSfx"><strong>Kéo file tiếng hiệu ứng vào đây</strong> (mp3, wav...)</div>
+      <input type="file" id="inSfx" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac" hidden>
+      <div class="audio-tag" id="sfxName"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Nhạc nền <span style="color:var(--muted);font-weight:400">(tuỳ chọn, tự lặp cho vừa độ dài video)</span></h2>
+    <div class="drop" id="dropBgm"><strong>Kéo file nhạc nền vào đây</strong> (mp3, wav...) hoặc bấm để chọn</div>
+    <input type="file" id="inBgm" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac" hidden>
+    <div class="file-line" id="bgmInfo" hidden><div id="bgmName"></div><button class="mini" id="bgmRemove">Bỏ nhạc nền</button></div>
+    <div class="opts" id="bgmOpts" hidden style="margin-top:12px">
+      <div class="opt"><label>Âm lượng nhạc nền: <b id="bgmVolVal">15%</b></label>
+        <input type="range" id="bgmVol" min="3" max="60" step="1" value="15"></div>
+      <div class="opt"><label style="color:var(--ink)"><input type="checkbox" id="bgmDuck" checked> Tự hạ nhỏ nhạc khi có giọng đọc</label></div>
+    </div>
+  </section>
+
+  <button class="go" id="go">Tạo video</button>
+  <p class="msg" id="msg"></p>
+  <pre id="log" hidden></pre>
+
+  <section id="result" hidden style="margin-top:16px">
+    <h2>Video của bạn đã xong</h2>
+    <video id="outVideo" controls></video><br>
+    <a id="dl" download="ket_qua.mp4">Tải video về</a>
+  </section>
+  </div>
+</main>
+
+<script src="/static/js/app.js" defer></script>
+</body>
+</html>

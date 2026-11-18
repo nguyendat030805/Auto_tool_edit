@@ -1,0 +1,6 @@
+Pillow>=10.0
+edge-tts>=6.1
+# Tuỳ chọn:
+# pytesseract>=0.3.10   # OCR tự động lấy chữ từ ảnh comment (cần cài thêm Tesseract + gói ngôn ngữ vie)
+# gTTS>=2.5             # TTS dự phòng
+# pyttsx3>=2.90         # TTS offline dự phòng
