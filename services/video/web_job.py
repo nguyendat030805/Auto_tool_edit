@@ -11,6 +11,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 VIDEO_SIZES = {"portrait": "1080x1920", "landscape": "1920x1080", "square": "1080x1080"}
 
 
+def _video_command_prefix() -> list[str]:
+    """Select the Python script or frozen-app entry point for video rendering."""
+    if getattr(sys, "frozen", False):
+        return [sys.executable, "--video-cli"]
+    return [sys.executable, str(PROJECT_ROOT / "make_video.py")]
+
+
 def _clamp(value, lower, upper):
     """Keep an incoming UI option inside its allowed range."""
     return max(lower, min(upper, value))
@@ -35,7 +42,7 @@ def run_job(job: dict, opts: dict) -> None:
 
         output = directory / "output.mp4"
         command = [
-            sys.executable, str(PROJECT_ROOT / "make_video.py"),
+            *_video_command_prefix(),
             "--bg", str(background), "--comments", *map(str, images), "--out", str(output),
             "--size", VIDEO_SIZES.get(opts.get("size"), VIDEO_SIZES["portrait"]),
             "--dim", f"{_clamp(float(opts.get('dim', 0.25)), 0, 0.8):.2f}",

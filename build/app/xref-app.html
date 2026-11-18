@@ -169,10 +169,12 @@ imports:
  &#8226;   <a href="#re._constants">re._constants</a>
  &#8226;   <a href="#re._parser">re._parser</a>
  &#8226;   <a href="#reprlib">reprlib</a>
+ &#8226;   <a href="#services.video">services.video</a>
  &#8226;   <a href="#sre_compile">sre_compile</a>
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
  &#8226;   <a href="#stat">stat</a>
+ &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#warnings">warnings</a>
@@ -3109,6 +3111,7 @@ imported by:
  &#8226;   <a href="#requests.utils">requests.utils</a>
  &#8226;   <a href="#services.post.renderer">services.post.renderer</a>
  &#8226;   <a href="#services.post.uploads">services.post.uploads</a>
+ &#8226;   <a href="#services.update.checker">services.update.checker</a>
  &#8226;   <a href="#services.video.audio">services.video.audio</a>
  &#8226;   <a href="#services.video.cli">services.video.cli</a>
  &#8226;   <a href="#services.video.media">services.video.media</a>
@@ -15693,6 +15696,7 @@ imported by:
  &#8226;   <a href="#json.scanner">json.scanner</a>
  &#8226;   <a href="#multiprocessing.resource_tracker">multiprocessing.resource_tracker</a>
  &#8226;   <a href="#requests.compat">requests.compat</a>
+ &#8226;   <a href="#services.update.checker">services.update.checker</a>
  &#8226;   <a href="#setuptools.config._validate_pyproject.error_reporting">setuptools.config._validate_pyproject.error_reporting</a>
  &#8226;   <a href="#setuptools.msvc">setuptools.msvc</a>
  &#8226;   <a href="#urllib3._request_methods">urllib3._request_methods</a>
@@ -18689,6 +18693,7 @@ imported by:
  &#8226;   <a href="#requests.utils">requests.utils</a>
  &#8226;   <a href="#rlcompleter">rlcompleter</a>
  &#8226;   <a href="#services.post.renderer">services.post.renderer</a>
+ &#8226;   <a href="#services.update.checker">services.update.checker</a>
  &#8226;   <a href="#services.video.web_job">services.video.web_job</a>
  &#8226;   <a href="#setuptools._distutils.cmd">setuptools._distutils.cmd</a>
  &#8226;   <a href="#setuptools._distutils.command.build_ext">setuptools._distutils.command.build_ext</a>
@@ -19559,6 +19564,7 @@ imported by:
 <span class="moduletype">Package</span>  <div class="import">
 imported by:
     <a href="#services.post">services.post</a>
+ &#8226;   <a href="#services.update">services.update</a>
  &#8226;   <a href="#services.video">services.video</a>
 
   </div>
@@ -19636,6 +19642,45 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="services.update"></a>
+  <a target="code" href="///D:/comment-video/services/update/__init__.py" type="text/plain"><tt>services.update</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#services">services</a>
+ &#8226;   <a href="#services.update.checker">services.update.checker</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#services.update.checker">services.update.checker</a>
+ &#8226;   <a href="#web.server">web.server</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="services.update.checker"></a>
+  <a target="code" href="///D:/comment-video/services/update/checker.py" type="text/plain"><tt>services.update.checker</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#services.update">services.update</a>
+ &#8226;   <a href="#urllib.error">urllib.error</a>
+ &#8226;   <a href="#urllib.request">urllib.request</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#services.update">services.update</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="services.video"></a>
   <a target="code" href="///D:/comment-video/services/video/__init__.py" type="text/plain"><tt>services.video</tt></a>
 <span class="moduletype">Package</span>  <div class="import">
@@ -19646,7 +19691,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#services.video.audio">services.video.audio</a>
+    <a href="#app.py">app.py</a>
+ &#8226;   <a href="#services.video.audio">services.video.audio</a>
  &#8226;   <a href="#services.video.cli">services.video.cli</a>
  &#8226;   <a href="#services.video.media">services.video.media</a>
  &#8226;   <a href="#services.video.renderer">services.video.renderer</a>
@@ -24161,6 +24207,7 @@ imported by:
  &#8226;   <a href="#aiohttp.worker">aiohttp.worker</a>
  &#8226;   <a href="#aiosignal">aiosignal</a>
  &#8226;   <a href="#annotationlib">annotationlib</a>
+ &#8226;   <a href="#app.py">app.py</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#ast">ast</a>
  &#8226;   <a href="#asyncio">asyncio</a>
@@ -25457,6 +25504,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#pathlib">pathlib</a>
+ &#8226;   <a href="#services.update.checker">services.update.checker</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
 
   </div>
@@ -25551,6 +25599,7 @@ imported by:
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#pathlib">pathlib</a>
  &#8226;   <a href="#requests.compat">requests.compat</a>
+ &#8226;   <a href="#services.update.checker">services.update.checker</a>
  &#8226;   <a href="#setuptools._vendor.jaraco.context">setuptools._vendor.jaraco.context</a>
  &#8226;   <a href="#setuptools.config._validate_pyproject.formats">setuptools.config._validate_pyproject.formats</a>
  &#8226;   <a href="#xml.sax.saxutils">xml.sax.saxutils</a>
@@ -26976,6 +27025,7 @@ imports:
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#secrets">secrets</a>
  &#8226;   <a href="#services.post">services.post</a>
+ &#8226;   <a href="#services.update">services.update</a>
  &#8226;   <a href="#services.video.web_job">services.video.web_job</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#sys">sys</a>
